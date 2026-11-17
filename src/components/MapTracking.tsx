@@ -186,17 +186,25 @@ export function MapTracking({
 
   if (!apiKey) {
     return (
-      <div
-        className={`${heightClass} w-full rounded-2xl border border-[#E2E8F0] bg-[#F8FAFC] flex flex-col items-center justify-center p-6 text-center`}
-      >
-        <Navigation className="w-6 h-6 text-[#059669] mb-2" />
-        <p className="text-sm font-medium text-[#0F172A]">
-          Carte GPS Grand Libreville en cours d’initialisation
-        </p>
-        <p className="text-xs text-[#475569] mt-1 max-w-md">
-          Coordonnées suivies en direct :{' '}
-          {markers.map((m) => `${m.label} (${m.position.lat.toFixed(4)}, ${m.position.lng.toFixed(4)})`).join(' · ')}
-        </p>
+      <div className={`${heightClass} w-full rounded-2xl border border-[#E2E8F0] bg-[#F8FAFC] relative overflow-hidden flex flex-col items-center justify-center p-6 text-center`}>
+        <iframe
+          title="OpenStreetMap Grand Libreville"
+          width="100%"
+          height="100%"
+          style={{ border: 0, position: 'absolute', inset: 0, opacity: 0.85 }}
+          loading="lazy"
+          src={`https://www.openstreetmap.org/export/embed.html?bbox=${center.lng - 0.08},${center.lat - 0.08},${center.lng + 0.08},${center.lat + 0.08}&layer=mapnik&marker=${center.lat},${center.lng}`}
+        />
+        <div className="absolute inset-0 bg-black/5 pointer-events-none" />
+        <div className="relative z-10 bg-white/95 backdrop-blur-xs px-4 py-2.5 rounded-xl border border-[#E2E8F0] shadow-xs space-y-1">
+          <p className="text-xs font-semibold text-[#0F172A] flex items-center justify-center gap-1.5">
+            <Navigation className="w-3.5 h-3.5 text-[#059669]" />
+            Carte interactive OpenStreetMap (Grand Libreville)
+          </p>
+          <p className="text-[11px] text-[#475569]">
+            {markers.length > 0 ? markers.map((m) => `${m.label} (${m.position.lat.toFixed(4)}, ${m.position.lng.toFixed(4)})`).join(' · ') : `Centre : ${center.lat.toFixed(4)}, ${center.lng.toFixed(4)}`}
+          </p>
+        </div>
       </div>
     );
   }

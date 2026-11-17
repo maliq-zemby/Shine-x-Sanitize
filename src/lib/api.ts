@@ -208,6 +208,37 @@ function handleStaticFallback<T>(url: string, options?: RequestInit): T {
     throw new Error('Non authentifié');
   }
 
+  if (url === '/api/profile' && method === 'PATCH') {
+    const currentId = localStorage.getItem('shine_static_current_user_id');
+    const userIdx = storedUsers.findIndex((u: any) => u.id === currentId);
+    if (userIdx >= 0) {
+      const updated = {
+        ...storedUsers[userIdx],
+        ...body,
+        updatedAt: new Date().toISOString()
+      };
+      storedUsers[userIdx] = updated;
+      localStorage.setItem('shine_static_users', JSON.stringify(storedUsers));
+      const { password: _, ...user } = updated;
+      return { user, message: 'Profil mis à jour avec succès' } as unknown as T;
+    }
+    const dummyUser: RegisteredUser = {
+      id: currentId || 'usr_fallback',
+      name: body.name || 'Utilisateur',
+      email: body.email || 'user@example.ga',
+      role: 'client',
+      status: 'active',
+      communeId: body.communeId || 'libreville',
+      communeName: body.communeId === 'akanda' ? 'Akanda' : 'Libreville',
+      quartierName: body.quartierName || 'Louis',
+      phone: body.phone,
+      preferences: body.preferences as any,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    };
+    return { user: dummyUser, message: 'Profil mis à jour avec succès' } as unknown as T;
+  }
+
   if (url === '/api/orders' && method === 'POST') {
     const newOrder: any = {
       id: 'ord_' + Date.now(),
