@@ -1,0 +1,6 @@
+{
+  "name": "Komo Services — Services à domicile Libreville",
+  "description": "Plateforme multiservices de mise en relation, configuration sur mesure, tarification transparente négociable et suivi GPS en temps réel à Libreville, Akanda et Owendo.",
+  "requestFramePermissions": ["geolocation", "camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

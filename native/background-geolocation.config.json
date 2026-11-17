@@ -1,0 +1,40 @@
+{
+  "appName": "Shine x Sanitize — Alp Group",
+  "bundleId": "com.alpgroup.shinesanitize",
+  "backgroundGeolocation": {
+    "desiredAccuracy": "HIGH",
+    "distanceFilter": 0,
+    "locationUpdateInterval": 6000,
+    "fastestLocationUpdateInterval": 5000,
+    "heartbeatInterval": 6,
+    "preventSuspend": true,
+    "pausesLocationUpdatesAutomatically": false,
+    "showsBackgroundLocationIndicator": true,
+    "locationAuthorizationRequest": "Always",
+    "disableLocationAuthorizationAlert": false,
+    "stopOnTerminate": false,
+    "startOnBoot": true,
+    "foregroundService": true,
+    "enableHeadless": true,
+    "disableElasticity": true,
+    "autoSync": true,
+    "batchSync": true,
+    "maxBatchSize": 25,
+    "maxDaysToPersist": 3,
+    "notification": {
+      "title": "Shine x Sanitize : Suivi GPS actif pour la mission en cours",
+      "text": "Synchronisation temps réel toutes les 6s (Libreville, Akanda & Owendo)",
+      "channelName": "Suivi GPS Agent",
+      "smallIcon": "drawable/ic_stat_shine_sanitize",
+      "sticky": true,
+      "priority": -1
+    },
+    "locationAuthorizationAlert": {
+      "titleWhenNotEnabled": "Localisation « Toujours autoriser » requise",
+      "titleWhenOff": "GPS désactivé sur l’appareil",
+      "instructions": "Sélectionnez « Toujours autoriser » dans les réglages pour maintenir le suivi GPS pendant vos déplacements à Libreville et Akanda.",
+      "cancelButton": "Annuler",
+      "settingsButton": "Ouvrir les réglages"
+    }
+  }
+}
