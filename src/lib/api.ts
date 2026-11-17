@@ -50,11 +50,29 @@ async function request<T>(url: string, options?: RequestInit): Promise<T> {
     headers.Authorization = `Bearer ${token}`;
   }
 
-  const res = await fetch(url, {
-    ...options,
-    headers,
-  });
-  const data = await res.json();
+  let res: Response;
+  try {
+    res = await fetch(url, {
+      ...options,
+      headers,
+    });
+  } catch {
+    throw new Error('Impossible de joindre le serveur. Vérifiez votre connexion ou l’URL du backend.');
+  }
+
+  const text = await res.text();
+  let data: any = {};
+  try {
+    data = text ? JSON.parse(text) : {};
+  } catch {
+    if (text.trim().startsWith('<')) {
+      throw new Error(
+        "Erreur Netlify (404/Statique) : L'application est déployée en site statique pur et ne peut joindre l'API backend '/api/*'. Pour un fonctionnement avec base de données, configurez des Netlify Functions ou un serveur Node.js distant."
+      );
+    }
+    throw new Error('Réponse serveur invalide (JSON attendu).');
+  }
+
   if (!res.ok) {
     throw new Error(data?.error || 'Erreur serveur');
   }
